@@ -1,0 +1,131 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% import "macro_functions.html.twig" as mf %}
+
+{% block meta_title %}{{ 'Pterodactyl Module Settings' | trans }}{% endblock %}
+
+{% set active_menu = 'system' %}
+
+{% block breadcrumbs %}
+<ul>
+    <li class="firstB"><a href="{{ '/' | alink }}">{{ 'Home' | trans }}</a></li>
+    <li><a href="{{ 'system' | alink }}">{{ 'Settings' | trans }}</a></li>
+    <li class="lastB">{{ 'Pterodactyl Module Settings' | trans }}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="widget">
+    <div class="head">
+        <h5 class="iCog">{{ 'Pterodactyl Module Settings' | trans }}</h5>
+    </div>
+
+    {% set params = admin.extension_config_get({"ext":"mod_pterodactyl"}) %}
+
+    <form method="post" action="{{ 'api/admin/extension/config_save' | link }}" class="mainForm api-form" data-api-msg="{{ 'Configuration updated' | trans }}">
+        <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}"/>
+
+        <div class="help">
+            <h3>{{ 'Pterodactyl Module Settings' | trans }}</h3>
+            <p>{{ 'Configure the Pterodactyl module to integrate with your Pterodactyl panel. Ensure you have the necessary permissions for the API key.' | trans }}</p>
+        </div>
+
+        <fieldset>
+            <div class="rowElem noborder">
+                <label>{{ 'API Key' | trans }}</label>
+                <div class="formRight">
+                    <input type="password" name="api_key" value="{{params.api_key}}" placeholder="{{ 'Enter your Pterodactyl API Key' | trans }}" required pattern="^[a-zA-Z0-9]+$" title="{{ 'API Key must contain only alphanumeric characters' | trans }}"/>
+                    <span class="formNote">{{ 'Ensure this key has the necessary permissions to manage servers.' | trans }}</span>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem noborder">
+                <label>{{ 'Panel Base URL' | trans }}</label>
+                <div class="formRight">
+                    <input type="url" name="panel_url" value="{{params.panel_url}}" placeholder="{{ 'https://panel.example.com' | trans }}" required pattern="https?://.+"/>
+                    <span class="formNote">{{ 'The base URL of your Pterodactyl panel, including protocol (http:// or https://).' | trans }}</span>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <!-- Additional configuration options could be added here -->
+            <!-- Example: Default server settings -->
+            <div class="rowElem noborder">
+                <label>{{ 'Default Memory (MB)' | trans }}</label>
+                <div class="formRight">
+                    <input type="number" name="default_memory" value="{{params.default_memory | default(1024)}}" placeholder="{{ 'Default server memory in MB' | trans }}" min="128" max="16384" required/>
+                    <span class="formNote">{{ 'Set the default amount of memory allocated to new servers.' | trans }}</span>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <div class="rowElem noborder">
+                <label>{{ 'Default Disk Space (MB)' | trans }}</label>
+                <div class="formRight">
+                    <input type="number" name="default_disk" value="{{params.default_disk | default(5120)}}" placeholder="{{ 'Default server disk space in MB' | trans }}" min="1024" max="1048576" required/>
+                    <span class="formNote">{{ 'Set the default amount of disk space allocated to new servers.' | trans }}</span>
+                </div>
+                <div class="fix"></div>
+            </div>
+
+            <!-- Additional configuration options could be added here -->
+
+        <div class="rowElem noborder">
+            <label>{{ 'Default CPU Limit' | trans }}</label>
+            <div class="formRight">
+                <input type="number" name="default_cpu" value="{{params.default_cpu | default(100)}}" placeholder="{{ 'Default CPU limit in %' | trans }}" min="1" max="100" required/>
+                <span class="formNote">{{ 'Set the default CPU limit for new servers, in percentage.' | trans }}</span>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem noborder">
+            <label>{{ 'Default IO Limit (MB/s)' | trans }}</label>
+            <div class="formRight">
+                <input type="number" name="default_io" value="{{params.default_io | default(500)}}" placeholder="{{ 'Default IO limit in MB/s' | trans }}" min="1" max="1000" required/>
+                <span class="formNote">{{ 'Set the default IO limit for new servers, in MB/s.' | trans }}</span>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem noborder">
+            <label>{{ 'Default Egg' | trans }}</label>
+            <div class="formRight">
+                <select name="default_egg">
+                    <option value="" {% if params.default_egg is empty %}selected{% endif %}>{{ 'Select Default Egg' | trans }}</option>
+                    {% for egg in available_eggs %}
+                        <option value="{{ egg.id }}" {% if params.default_egg == egg.id %}selected{% endif %}>{{ egg.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="formNote">{{ 'Choose the default Egg (server template) for new servers.' | trans }}</span>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem noborder">
+            <label>{{ 'Enable Automatic Start' | trans }}</label>
+            <div class="formRight">
+                <input type="checkbox" name="auto_start" value="1" {% if params.auto_start %}checked{% endif %}/>
+                <span class="formNote">{{ 'Automatically start servers after creation.' | trans }}</span>
+            </div>
+            <div class="fix"></div>
+        </div>
+        
+        <div class="rowElem noborder">
+            <label>{{ 'Max Servers per Client' | trans }}</label>
+            <div class="formRight">
+                <input type="number" name="max_servers_per_client" value="{{params.max_servers_per_client | default(5)}}" placeholder="{{ 'Max number of servers per client' | trans }}" min="1" max="100" required/>
+                <span class="formNote">{{ 'Set the maximum number of servers a client can have.' | trans }}</span>
+            </div>
+            <div class="fix"></div>
+        </div>
+
+<!-- End of additional configuration options -->
+            <input type="submit" value="{{ 'Update' | trans }}" class="greyishBtn submitForm" />
+            <input type="hidden" name="ext" value="mod_pterodactyl" />
+        </fieldset>
+    </form>
+</div>
+
+{% endblock %}
