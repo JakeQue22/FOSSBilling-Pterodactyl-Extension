@@ -4,7 +4,7 @@ namespace Modules\PterodactylService\Service;
 
 use Illuminate\Support\Facades\Http;
 use Modules\PterodactylService\Exceptions\PterodactylException;
-use Box\InjectionAwareInterface;
+use \FOSSBilling\InjectionAwareInterface;
 use Box\Di;
 
 class Service implements InjectionAwareInterface

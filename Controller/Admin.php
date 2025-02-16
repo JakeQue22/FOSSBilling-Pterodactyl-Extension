@@ -2,7 +2,7 @@
 
 namespace Modules\PterodactylService\Controller;
 
-use Box\InjectionAwareInterface;
+use \FOSSBilling\InjectionAwareInterface;
 use Box\Di;
 use Illuminate\Http\Request;
 use Modules\PterodactylService\Service\Service as PterodactylService;
