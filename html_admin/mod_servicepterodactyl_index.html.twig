@@ -1,0 +1,24 @@
+<h1>Pterodactyl Servers</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Server ID</th>
+            <th>Client ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for server in servers %}
+            <tr>
+                <td>{{ server.id }}</td>
+                <td>{{ server.client_id }}</td>
+                <td>{{ server.status }}</td>
+                <td>
+                    <a href="{{ url('admin/servicepterodactyl/manage', {'id': server.id}) }}" class="btn btn-sm btn-primary">Manage</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url('admin/servicepterodactyl/create') }}" class="btn btn-success">Create New Server</a>
