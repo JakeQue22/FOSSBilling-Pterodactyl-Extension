@@ -1,0 +1,34 @@
+{
+    "name": "JakeQue22/fossbilling-pterodactyl-extension",
+    "description": "A module for FOSSBilling to integrate with Pterodactyl for game server management",
+    "type": "foossbilling-module",
+    "autoload": {
+        "psr-4": {
+            "Modules\\PterodactylService\\": ""
+        }
+    },
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/JakeQue22/FOSSBilling-Pterodactyl-Extension"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "modules/PterodactylService": ["JakeQue22/fossbilling-pterodactyl-extension"]
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JakeQue22",
+            "homepage": "https://github.com/JakeQue22"
+        }
+    ]
+}
