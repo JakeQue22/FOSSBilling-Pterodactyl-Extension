@@ -1,10 +1,10 @@
 {
-    "name": "JakeQue22/fossbilling-pterodactyl-extension",
+    "name": "jakeque22/fossbilling-pterodactyl-extension",
     "description": "A module for FOSSBilling to integrate with Pterodactyl for game server management",
     "type": "foossbilling-module",
     "autoload": {
         "psr-4": {
-            "Modules\\PterodactylService\\": ""
+            "Modules\\Servicepterodactyl\\": ""
         }
     },
     "require": {
@@ -21,7 +21,7 @@
     ],
     "extra": {
         "installer-paths": {
-            "modules/PterodactylService": ["JakeQue22/fossbilling-pterodactyl-extension"]
+            "modules/Servicepterodactyl": ["jakeque22/fossbilling-pterodactyl-extension"]
         }
     },
     "license": "MIT",
