@@ -1,0 +1,29 @@
+{
+    "id": "servicepterodactyl",
+    "type": "service",
+    "name": "Pterodactyl",
+    "description": "Manage game servers through Pterodactyl's API, allowing for server creation, suspension, unsuspension, and deletion.",
+    "icon_url": "icon.png",
+    "project_url": "https://github.com/NoraCloud/Pterodactyl-FOSSBilling-service",
+    "author": "JakeQue",
+    "author_url": "https://github.com/JakeQue",
+    "license": "GPLv3",
+    "version": "1.0.0",
+    "namespace": "Modules\\PterodactylService",
+    "dependencies": {
+        "php": "^7.4|^8.0"
+    },
+    "configurable": true,
+    "settings": {
+        "pterodactyl_url": {
+            "type": "text",
+            "label": "Pterodactyl Panel URL",
+            "description": "Enter the base URL of your Pterodactyl panel (e.g., https://your-pterodactyl-panel.com)"
+        },
+        "pterodactyl_api_key": {
+            "type": "password",
+            "label": "Pterodactyl API Key",
+            "description": "Enter your Pterodactyl API key for server management"
+        }
+    }
+}
