@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\PterodactylService\Api;
+namespace Modules\Servicepterodactyl\Api;
 
 use \FOSSBilling\InjectionAwareInterface;
 use Box\Di;

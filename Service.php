@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\PterodactylService\Service;
+namespace Modules\Servicepterodactyl\Service;
 
 use Illuminate\Support\Facades\Http;
 use Modules\PterodactylService\Exceptions\PterodactylException;
