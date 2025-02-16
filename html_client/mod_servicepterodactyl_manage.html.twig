@@ -1,0 +1,76 @@
+{% extends request.ajax ? "layout_blank.html.twig" : "layout_default.html.twig" %}
+
+{% import "macro_functions.html.twig" as mf %}
+
+{% block meta_title %}{{ 'Manage Pterodactyl Server' | trans }}{% endblock %}
+
+{% set active_menu = 'system' %}
+
+{% block breadcrumbs %}
+<ul>
+    <li class="firstB"><a href="{{ '/' | alink }}">{{ 'Home' | trans }}</a></li>
+    <li><a href="{{ 'extension/servicepterodactyl' | alink }}">{{ 'Pterodactyl Module' | trans }}</a></li>
+    <li class="lastB">{{ 'Manage Server' | trans }}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="widget">
+    <div class="head">
+        <h5 class="iComputer">{{ 'Manage Server' | trans }}: {{ server.id }}</h5>
+    </div>
+
+    <div class="rowElem noborder">
+        <label>{{ 'Client ID' | trans }}</label>
+        <div class="formRight">
+            {{ server.client_id }}
+        </div>
+        <div class="fix"></div>
+    </div>
+
+    <div class="rowElem noborder">
+        <label>{{ 'Status' | trans }}</label>
+        <div class="formRight">
+            {{ server.status }}
+        </div>
+        <div class="fix"></div>
+    </div>
+
+    {% if order.status == 'active' %}
+        <form action="{{ 'extension/servicepterodactyl/manage' | link({'id': server.id}) }}" method="post" class="mainForm api-form" data-api-msg="{{ 'Server action performed' | trans }}">
+            <input type="hidden" name="CSRFToken" value="{{ CSRFToken }}"/>
+            <input type="hidden" name="id" value="{{ server.id }}"/>
+
+            {% if server.status != 'suspended' %}
+                <div class="rowElem noborder">
+                    <label>{{ 'Action' | trans }}</label>
+                    <div class="formRight">
+                        <button type="submit" name="action" value="suspend" class="btn btn-warning" onclick="return confirm('{{ 'Are you sure you want to suspend this server?' | trans }}')">{{ 'Suspend Server' | trans }}</button>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+            {% else %}
+                <div class="rowElem noborder">
+                    <label>{{ 'Action' | trans }}</label>
+                    <div class="formRight">
+                        <button type="submit" name="action" value="unsuspend" class="btn btn-success" onclick="return confirm('{{ 'Are you sure you want to unsuspend this server?' | trans }}')">{{ 'Unsuspend Server' | trans }}</button>
+                    </div>
+                    <div class="fix"></div>
+                </div>
+            {% endif %}
+
+            <div class="rowElem noborder">
+                <label>{{ 'Action' | trans }}</label>
+                <div class="formRight">
+                    <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('{{ 'Are you sure you want to delete this server? This action cannot be undone.' | trans }}')">{{ 'Delete Server' | trans }}</button>
+                </div>
+                <div class="fix"></div>
+            </div>
+        </form>
+    {% else %}
+        <div class="alert alert-info">
+            {{ 'This server cannot be managed because its associated order is not active.' | trans }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
