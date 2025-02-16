@@ -1,0 +1,13 @@
+<?php
+
+namespace Modules\PterodactylService\Exceptions;
+
+use Exception;
+
+class PterodactylException extends Exception
+{
+    // Custom exception for Pterodactyl related errors
+    public function __construct($message, $code = 0, Exception $previous = null) {
+        parent::__construct($message, $code, $previous);
+    }
+}
