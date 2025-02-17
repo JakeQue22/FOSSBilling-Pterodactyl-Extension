@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Servicepterodactyl\Api;
+namespace FOSSBilling\Mod\Servicepterodactyl\Api;
 
 use \FOSSBilling\InjectionAwareInterface;
 use Box\Di;
 use Illuminate\Http\Request;
-use Modules\PterodactylService\Service\Service as PterodactylService;
+use Modules\Servicepterodactyl\Service as PterodactylService;
 
 class Client extends \Api_Abstract implements InjectionAwareInterface
 {

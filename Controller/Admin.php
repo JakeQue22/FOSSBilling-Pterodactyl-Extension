@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Servicepterodactyl\Controller;
+namespace FOSSBilling\Mod\Servicepterodactyl\Controller;
 
 use \FOSSBilling\InjectionAwareInterface;
 use Box\Di;
 use Illuminate\Http\Request;
-use Modules\PterodactylService\Service\Service as PterodactylService;
+use Modules\Servicepterodactyl\Service as PterodactylService;
 
 class Admin implements InjectionAwareInterface
 {

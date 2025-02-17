@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Servicepterodactyl\Exceptions;
+namespace FOSSBilling\Mod\Servicepterodactyl\Exceptions;
 
 use Exception;
 

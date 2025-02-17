@@ -10,20 +10,6 @@
     "require": {
         "php": "^7.4|^8.0"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/JakeQue22/FOSSBilling-Pterodactyl-Extension"
-        }
-    ],
-    "extra": {
-        "installer-paths": {
-            "modules/Servicepterodactyl": ["jakeque22/fossbilling-pterodactyl-extension"]
-        }
-    },
     "license": "MIT",
     "authors": [
         {

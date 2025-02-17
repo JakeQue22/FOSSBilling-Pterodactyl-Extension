@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Servicepterodactyl\Service;
+namespace FOSSBilling\Mod\Servicepterodactyl;
 
 use Illuminate\Support\Facades\Http;
-use Modules\PterodactylService\Exceptions\PterodactylException;
-use \FOSSBilling\InjectionAwareInterface;
-use Box\Di;
+use Modules\Servicepterodactyl\Exceptions\PterodactylException;
+use FOSSBilling\InjectionAwareInterface;
+use Pimple\Container;
 
 class Service implements InjectionAwareInterface
 {
@@ -14,9 +14,9 @@ class Service implements InjectionAwareInterface
     /**
      * Set the dependency injection container on the service.
      *
-     * @param Di $di
+     * @param Container $di
      */
-    public function setDi(Di $di)
+    public function setDi(Container $di): void
     {
         $this->di = $di;
     }
@@ -24,9 +24,9 @@ class Service implements InjectionAwareInterface
     /**
      * Get the dependency injection container from the service.
      *
-     * @return Di
+     * @return Container
      */
-    public function getDi()
+    public function getDi(): Container
     {
         return $this->di;
     }
@@ -132,7 +132,7 @@ class Service implements InjectionAwareInterface
         }
     }
 
-       /**
+    /**
      * Suspend a server in Pterodactyl for the given order.
      *
      * @param \Model_ClientOrder $order
