@@ -44,11 +44,13 @@ class Admin implements InjectionAwareInterface
                 'location'  => 'pterodactyl',       // menu group identifier for subitems
                 'label'     => 'Pterodactyl Module',// menu group title
                 'class'     => 'pterodactyl',       // used for CSS styling menu item
+                'icon'      => '<img src="/modules/Servicepterodactyl/icon.png" alt="Pterodactyl Icon" style="width: 20px; height: 20px;" />', // Custom icon path
             ],
             'subpages'=> [
                 [
                     'location'  => 'pterodactyl',    // place this module in extensions group
                     'label'     => 'Pterodactyl Configuration',
+                    'icon'      => 'fa fa-cogs', // Custom icon path
                     'index'     => 1500,
                     'uri'       => $this->di['url']->adminLink('pterodactyl/index'),
                     'class'     => '',
@@ -80,10 +82,16 @@ class Admin implements InjectionAwareInterface
      * @return mixed
      */
     public function get_index(\Box_App $app)
-    {
-        $this->di['is_admin_logged'];  // Make sure the user is logged in
-        return $app->render('html_admin/mod_pterodactyl_index'); // Adjusted the template path
-    }
+{
+    $this->di['is_admin_logged'];  // Ensure the user is logged in
+
+    // Fetch the servers from the database (adjust query as needed)
+    $servers = $this->di['db']->findAll('service_pterodactyl');
+
+    // Pass the servers data to the Twig template
+    return $app->render('html_admin/mod_servicepterodactyl_index', ['servers' => $servers]);
+}
+
 
     /**
      * Display the form to create a new server.
@@ -94,7 +102,7 @@ class Admin implements InjectionAwareInterface
     public function get_create(\Box_App $app)
     {
         $this->di['is_admin_logged'];  // Make sure the user is logged in
-        return $app->render('html_admin/mod_pterodactyl_create'); // Adjusted the template path
+        return $app->render('html_admin/mod_servicepterodactyl_create'); // Adjusted the template path
     }
 
     /**
@@ -139,7 +147,7 @@ class Admin implements InjectionAwareInterface
         if (!$server) {
             throw new \Box_Exception('Server not found');
         }
-        return $app->render('html_admin/mod_pterodactyl_manage', ['server' => $server]); // Adjusted the template path
+        return $app->render('html_admin/mod_servicepterodactyl_manage', ['server' => $server]); // Adjusted the template path
     }
 
     /**

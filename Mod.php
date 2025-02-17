@@ -139,13 +139,13 @@ class Box_Mod
     }
 
     public function getClientController()
-    {
+{
     if (!$this->hasClientController()) {
         return null;
     }
 
     // List of core modules that should use the old Box\Mod\ namespace
-    $coreModules = ['activity', 'staff', 'invoice', 'client', 'support', 'orderbutton', 'currency', 'email', 'index', 'order', 'product', 'servicedomain', 'servicehosting', 'system', 'theme', 'notification', 'custompages', 'redirect'];
+    $coreModules = ['activity', 'staff', 'invoice', 'client', 'support', 'orderbutton', 'currency', 'email', 'index', 'order', 'product', 'servicedomain', 'servicehosting', 'system', 'theme', 'notification', 'custompages', 'api', 'redirect'];
 
     if (in_array($this->mod, $coreModules)) {
         // Core modules should still use Box\Mod\
@@ -162,6 +162,7 @@ class Box_Mod
 
     return $service;
 }
+
 
 
     public function hasSettingsPage()
@@ -181,7 +182,7 @@ class Box_Mod
     }
 
     // List of core modules that should use the old Box\Mod\ namespace
-    $coreModules = ['activity', 'staff', 'invoice', 'client', 'support', 'orderbutton', 'currency', 'email', 'index', 'order', 'product', 'servicedomain', 'servicehosting', 'system', 'theme', 'notification', 'custompages', 'redirect'];
+    $coreModules = ['activity', 'staff', 'invoice', 'client', 'support', 'orderbutton', 'currency', 'email', 'index', 'order', 'product', 'servicedomain', 'servicehosting', 'system', 'theme', 'notification', 'custompages', 'redirect', 'api'];
 
     if (in_array($this->mod, $coreModules)) {
         // Core modules should still use Box\Mod\

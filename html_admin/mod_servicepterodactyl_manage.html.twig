@@ -1,15 +1,18 @@
 <h1>Manage Server {{ server.id }}</h1>
 <p><strong>Client ID:</strong> {{ server.client_id }}</p>
 <p><strong>Status:</strong> {{ server.status }}</p>
-<form action="{{ url('admin/servicepterodactyl/manage', {'id': server.id}) }}" method="post">
+
+<form action="{{ di['url'].adminLink('servicepterodactyl/manage', {'id': server.id}) }}" method="post">
     <input type="hidden" name="action" value="suspend">
     <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to suspend this server?')">Suspend Server</button>
 </form>
-<form action="{{ url('admin/servicepterodactyl/manage', {'id': server.id}) }}" method="post">
+
+<form action="{{ di['url'].adminLink('servicepterodactyl/manage', {'id': server.id}) }}" method="post">
     <input type="hidden" name="action" value="unsuspend">
     <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to unsuspend this server?')">Unsuspend Server</button>
 </form>
-<form action="{{ url('admin/servicepterodactyl/manage', {'id': server.id}) }}" method="post">
+
+<form action="{{ di['url'].adminLink('servicepterodactyl/manage', {'id': server.id}) }}" method="post">
     <input type="hidden" name="action" value="delete">
     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this server? This action cannot be undone.')">Delete Server</button>
 </form>
