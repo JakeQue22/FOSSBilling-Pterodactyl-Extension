@@ -6,7 +6,7 @@
     "icon_url": "icon.png",
     "project_url": "https://github.com/JakeQue22/FOSSBilling-Pterodactyl-Extension",
     "author": "JakeQue",
-    "author_url": "https://github.com/",
+    "author_url": "https://github.com/JakeQue22",
     "license": "GPLv3",
     "version": "1.0.0",
     "namespace": "Modules\\Servicepterodactyl",
@@ -25,6 +25,5 @@
             "label": "Pterodactyl API Key",
             "description": "Enter your Pterodactyl API key for server management"
         }
-    },
-    "bootstrap": "autoload.php"
+    }
 }
