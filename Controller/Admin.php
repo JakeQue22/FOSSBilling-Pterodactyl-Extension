@@ -2,8 +2,8 @@
 
 namespace FOSSBilling\Mod\Servicepterodactyl\Controller;
 
-use \FOSSBilling\InjectionAwareInterface;
-use Box\Di;
+use FOSSBilling\InjectionAwareInterface;
+use Pimple\Container;
 use Illuminate\Http\Request;
 use Modules\Servicepterodactyl\Service as PterodactylService;
 
@@ -14,9 +14,9 @@ class Admin implements InjectionAwareInterface
     /**
      * Set the dependency injection container on the admin controller.
      *
-     * @param Di $di
+     * @param Container $di
      */
-    public function setDi(Di $di)
+    public function setDi(Container $di): void
     {
         $this->di = $di;
     }
@@ -24,9 +24,9 @@ class Admin implements InjectionAwareInterface
     /**
      * Get the dependency injection container from the admin controller.
      *
-     * @return Di
+     * @return Container
      */
-    public function getDi()
+    public function getDi(): Container
     {
         return $this->di;
     }
@@ -41,13 +41,13 @@ class Admin implements InjectionAwareInterface
         return [
             'group'  =>  [
                 'index'     => 1600,                // menu sort order
-                'location'  => 'pterodactyl',           // menu group identificator for subitems
-                'label'     => 'Pterodactyl Module',    // menu group title
-                'class'     => 'pterodactyl',           // used for css styling menu item
+                'location'  => 'pterodactyl',       // menu group identifier for subitems
+                'label'     => 'Pterodactyl Module',// menu group title
+                'class'     => 'pterodactyl',       // used for CSS styling menu item
             ],
             'subpages'=> [
                 [
-                    'location'  => 'pterodactyl',       // place this module in extensions group
+                    'location'  => 'pterodactyl',    // place this module in extensions group
                     'label'     => 'Pterodactyl Configuration',
                     'index'     => 1500,
                     'uri'       => $this->di['url']->adminLink('pterodactyl/index'),
@@ -63,13 +63,15 @@ class Admin implements InjectionAwareInterface
      * @param \Box_App $app
      */
     public function register(\Box_App &$app)
-    {
-        $app->get('/pterodactyl', 'get_index', [], get_class($this));
-        $app->get('/pterodactyl/create', 'get_create', [], get_class($this));
-        $app->post('/pterodactyl/create', 'post_create', [], get_class($this));
-        $app->get('/pterodactyl/manage/{id}', 'get_manage', ['id' => '[0-9]+'], get_class($this));
-        $app->post('/pterodactyl/manage/{id}', 'post_manage', ['id' => '[0-9]+'], get_class($this));
-    }
+{
+    $app->get('/pterodactyl', 'get_index', [], get_class($this));
+    $app->get('/pterodactyl/index', 'get_index', [], get_class($this));
+    $app->get('/pterodactyl/create', 'get_create', [], get_class($this));
+    $app->post('/pterodactyl/create', 'post_create', [], get_class($this));
+    $app->get('/pterodactyl/manage/{id}', 'get_manage', ['id' => '[0-9]+'], get_class($this));
+    $app->post('/pterodactyl/manage/{id}', 'post_manage', ['id' => '[0-9]+'], get_class($this));
+}
+
 
     /**
      * Display the main index page for Pterodactyl management.
@@ -79,8 +81,8 @@ class Admin implements InjectionAwareInterface
      */
     public function get_index(\Box_App $app)
     {
-        $this->di['is_admin_logged'];
-        return $app->render('mod_pterodactyl_index');
+        $this->di['is_admin_logged'];  // Make sure the user is logged in
+        return $app->render('html_admin/mod_pterodactyl_index'); // Adjusted the template path
     }
 
     /**
@@ -91,8 +93,8 @@ class Admin implements InjectionAwareInterface
      */
     public function get_create(\Box_App $app)
     {
-        $this->di['is_admin_logged'];
-        return $app->render('mod_pterodactyl_create');
+        $this->di['is_admin_logged'];  // Make sure the user is logged in
+        return $app->render('html_admin/mod_pterodactyl_create'); // Adjusted the template path
     }
 
     /**
@@ -103,15 +105,14 @@ class Admin implements InjectionAwareInterface
      */
     public function post_create(Request $request)
     {
-        $this->di['is_admin_logged'];
+        $this->di['is_admin_logged'];  // Make sure the user is logged in
         try {
-            // Here you'd typically get the order or client details from the form or database
-            // For this example, we'll simulate with dummy data
+            // Simulate the order and client details for now
             $order = (object)[
-                'id' => time(), // Simulating an order ID
-                'client_id' => 1, // Simulating a client ID
-                'product_id' => 1, // Simulating a product ID
-                'config' => json_encode($request->all()) // Assume all form data is server config
+                'id' => time(),         // Simulated order ID
+                'client_id' => 1,       // Simulated client ID
+                'product_id' => 1,      // Simulated product ID
+                'config' => json_encode($request->all()) // Assume form data is server config
             ];
 
             $pterodactylService = $this->di['mod_service']('pterodactylservice');
@@ -132,13 +133,13 @@ class Admin implements InjectionAwareInterface
      */
     public function get_manage(\Box_App $app, $id)
     {
-        $this->di['is_admin_logged'];
+        $this->di['is_admin_logged'];  // Ensure the admin is logged in
         // Fetch server details by ID from the database
         $server = $this->di['db']->findOne('service_pterodactyl', 'id = ?', [$id]);
         if (!$server) {
             throw new \Box_Exception('Server not found');
         }
-        return $app->render('mod_pterodactyl_manage', ['server' => $server]);
+        return $app->render('html_admin/mod_pterodactyl_manage', ['server' => $server]); // Adjusted the template path
     }
 
     /**
@@ -150,7 +151,7 @@ class Admin implements InjectionAwareInterface
      */
     public function post_manage(Request $request, $id)
     {
-        $this->di['is_admin_logged'];
+        $this->di['is_admin_logged'];  // Ensure the admin is logged in
         $action = $request->input('action');
         $server = $this->di['db']->findOne('service_pterodactyl', 'id = ?', [$id]);
         if (!$server) {

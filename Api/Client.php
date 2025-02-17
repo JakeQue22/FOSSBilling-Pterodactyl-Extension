@@ -2,8 +2,8 @@
 
 namespace FOSSBilling\Mod\Servicepterodactyl\Api;
 
-use \FOSSBilling\InjectionAwareInterface;
-use Box\Di;
+use FOSSBilling\InjectionAwareInterface;
+use Pimple\Container;
 use Illuminate\Http\Request;
 use Modules\Servicepterodactyl\Service as PterodactylService;
 
